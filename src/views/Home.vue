@@ -76,7 +76,7 @@ import { ChainIds, switchNetwork } from "../utils/MetaMask";
 
 const PrideSquiggle = {
   wabi: require("../abis/PrideSquiggle.json"), // wrapped abi
-  address: "0xBD875B4379E638CeDb69c171A43040E5295236ab"
+  address: "0x433697232e3b55ec39050cb7a5678a3b1347eec4"
 };
 
 const shorten = (address: string) => {
@@ -88,8 +88,8 @@ export default defineComponent({
   components: {
   },
   setup() {
-    const expectedNetwork = ChainIds.RinkebyTestNet;
-    const networkName = "Rinkeby Testnet";
+    const expectedNetwork = ChainIds.Mainnet;
+    const networkName = "Ethereum Mainnet";
     const store = useStore();
     const tokenBalance = ref(0);
     const justMinted = ref(false);
