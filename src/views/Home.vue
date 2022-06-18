@@ -99,6 +99,9 @@ export default defineComponent({
     const tokenId = ref(0);
     const images = ref([] as Array<string>);
 
+    const providerViewOnly = new ethers.providers.AlchemyProvider("rinkeby");
+    const contractViewOnly = new ethers.Contract(PrideSquiggle.address, PrideSquiggle.wabi.abi, providerViewOnly);
+
     let prevProvider:ethers.providers.Web3Provider | null = null;
     const networkContext = computed(() => {
       if (prevProvider) {
@@ -136,6 +139,15 @@ export default defineComponent({
         }
     };
 
+    const fetchLimit = async(contract:any) => {
+      let result = await contract.functions.limit();
+      limit.value = result[0].toNumber();
+      result = await contract.functions.getCurrentToken();
+      currentToken.value = result[0].toNumber();
+      console.log("**fetchLimit", limit.value, currentToken.value);
+    };
+    fetchLimit(contractViewOnly);
+
     const fetchBalance = async () => {
       if (!networkContext.value) return;
       let contract = networkContext.value.contract;
@@ -150,11 +162,7 @@ export default defineComponent({
         imageURL.value = 'data:image/svg+xml;base64,' + Buffer.from(result[0]).toString('base64'); 
       }
 
-      result = await contract.functions.limit();
-      limit.value = result[0].toNumber();
-      result = await contract.functions.getCurrentToken();
-      currentToken.value = result[0].toNumber();
-      console.log("**fetchBakabce", tokenBalance.value, limit.value, currentToken.value);
+      await fetchLimit(contract);
     };
 
     const mint = async () => {
