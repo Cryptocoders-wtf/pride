@@ -13,7 +13,7 @@
           <img class="w-24 inline-block mr-2 rounded-xl" src="@/assets/squiggle4.svg" />
         </a>
       </div>
-      <p class="mb-4">We are releasing {{ $n(limit) }} NFTs to the LGBT commumity and supporters for free.</p>
+      <p class="mb-4">We are releasing {{ $n(limit) }} NFTs to the LGBT community and supporters for free.</p>
       <p class="mb-4">All the royality from the secondary sales on OpenSee will be directly donated to 
         <a href="https://outrightinternational.org" class="underline">OutRight Action International</a>.
       </p>
