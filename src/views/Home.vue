@@ -1,6 +1,6 @@
 <template>
   <div class="max-w-xl mx-auto text-left p-2">
-    <div class="mt-4 mb-8">
+    <div class="mt-4 mb-4">
       <p class="mb-4">We, <a href="https://www.singularitysociety.org/" class="underline">Singularity Society</a>, 
         have decided to create <a href="https://opensea.io/collection/pride-squiggle-2022" class="underline">Pride Squiggle NFTs</a>, a fully on-chain, 
         generated NFT collection to celebrate Pride Month 2022.</p>
@@ -23,14 +23,8 @@
        and, all artworks are available as cc0. Just like Nouns, one in twenty NFTs will be distributed to the developer, 
        <a href="https://twitter.com/nounsfes" class="underline">Nounsfes ⌐◨-◨</a>.</p>
     </div>
-    <div v-if="tokenGate == 'noAccount'">
-      <p>{{ $t("message."+tokenGate) }}</p>
-    </div>
-    <div v-else-if="tokenGate == 'invalidNetwork'">
-      <p>{{ $t("message."+tokenGate, {networkName}) }}</p>
-      <button @click="switchToValidNetwork" class="underline">Switch Network</button>
-    </div>
-    <div v-else>
+
+    <div class="mb-4">
       <div>
         <b>Total Count:</b> {{ $n(limit) }}
       </div>
@@ -40,6 +34,16 @@
       <div v-else>
         Sold Out!
       </div>
+    </div>
+
+    <div v-if="tokenGate == 'noAccount'">
+      <p>{{ $t("message."+tokenGate) }}</p>
+    </div>
+    <div v-else-if="tokenGate == 'invalidNetwork'">
+      <p>{{ $t("message."+tokenGate, {networkName}) }}</p>
+      <button @click="switchToValidNetwork" class="underline">Switch Network</button>
+    </div>
+    <div v-else>
       <div v-if="tokenBalance == 0" class="mt-4">
         <div v-if="justMinted">
           <p>Thank you for minting. Please wait a little bit...</p>
@@ -76,7 +80,7 @@ import { ChainIds, switchNetwork } from "../utils/MetaMask";
 
 const PrideSquiggle = {
   wabi: require("../abis/PrideSquiggle.json"), // wrapped abi
-  address: "0xBD875B4379E638CeDb69c171A43040E5295236ab"
+  address: "0x433697232e3b55ec39050cb7a5678a3b1347eec4"
 };
 
 const shorten = (address: string) => {
@@ -89,9 +93,9 @@ export default defineComponent({
   },
   setup() {
     // Following three lines must be changed for other networks
-    const expectedNetwork = ChainIds.RinkebyTestNet;
-    const networkName = "Rinkeby Testnet";
-    const providerViewOnly = new ethers.providers.AlchemyProvider("rinkeby");
+    const expectedNetwork = ChainIds.Mainnet;
+    const networkName = "Ethereum Mainnet";
+    const providerViewOnly = new ethers.providers.AlchemyProvider("mainnet");
 
     const contractViewOnly = new ethers.Contract(PrideSquiggle.address, PrideSquiggle.wabi.abi, providerViewOnly);
     const store = useStore();
